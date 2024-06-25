@@ -8,6 +8,7 @@ const DataDisplay = () => {
     const intervalId = setInterval(() => {
       fetch('/api/data')
         .then(response => response.json())
+        .then(console.log(response))
         .then(data => {
           setDistance(data.distance);
           setWaterDetected(data.waterDetected);
