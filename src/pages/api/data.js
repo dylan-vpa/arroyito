@@ -27,7 +27,7 @@ const dataHandler = async (req, res) => {
   } else if (req.method === 'GET') {
     // Return the latest data if available
     if (latestData.distance !== null && latestData.waterDetected !== null) {
-      return res.status(200).json({latestData});
+      return res.status(200).json({distance: latestData.distance, waterDetected: latestData.waterDetected});
     } else {
       return res.status(204).json({ message: 'No data available yet' }); // 204 No Content
     }
