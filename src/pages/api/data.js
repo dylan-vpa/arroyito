@@ -23,16 +23,13 @@ const dataHandler = async (req, res) => {
     // Update the latest data
     latestData = { distance, waterDetected };
 
-    res.setHeader('Content-Type', 'application/json');
     return res.status(200).json({ message: 'Datos recibidos correctamente' });
   } else if (req.method === 'GET') {
     // Return the latest data if available
     if (latestData.distance !== null && latestData.waterDetected !== null) {
-      res.setHeader('Content-Type', 'application/json'); 
       return res.status(200).json(latestData);
     } else {
-      res.setHeader('Content-Type', 'application/json'); 
-      return res.status(204).json({ message: 'No data available yet' }); 
+      return res.status(204).json({ message: 'No data available yet' }); // 204 No Content
     }
   }
 };
