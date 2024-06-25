@@ -1,4 +1,3 @@
-
 const dataHandler = async (req, res) => {
   const allowedMethods = ['POST', 'GET'];
 
@@ -21,14 +20,15 @@ const dataHandler = async (req, res) => {
 
     console.log(`Received data: distance=${distance}cm, waterDetected=${waterDetected}`);
 
-    // Update the latest data
-    let latestData = { distance, waterDetected };
+    // Update the existing latestData object (not create a new one)
+    latestData.distance = distance; 
+    latestData.waterDetected = waterDetected;
 
-    return res.status(200).json({ message: 'Datos recibidos correctamente' }) & latestData;
+    return res.status(200).json({ message: 'Datos recibidos correctamente' });
   } else if (req.method === 'GET') {
     // Return the latest data if available
     if (latestData.distance !== null && latestData.waterDetected !== null) {
-      return res.status(200).json({distance: latestData.distance, waterDetected: latestData.waterDetected});
+      return res.status(200).json(latestData); // Return the whole latestData object
     } else {
       return res.status(204).json({ message: 'No data available yet' }); // 204 No Content
     }
