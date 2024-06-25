@@ -22,9 +22,9 @@ const dataHandler = async (req, res) => {
     console.log(`Received data: distance=${distance}cm, waterDetected=${waterDetected}`);
 
     // Update the latest data
-    latestData = { distance, waterDetected };
+    let latestData = { distance, waterDetected };
 
-    return res.status(200).json({ message: 'Datos recibidos correctamente' });
+    return res.status(200).json({ message: 'Datos recibidos correctamente' }) & latestData;
   } else if (req.method === 'GET') {
     // Return the latest data if available
     if (latestData.distance !== null && latestData.waterDetected !== null) {
