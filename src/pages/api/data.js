@@ -5,11 +5,8 @@ const dataHandler = async (req, res) => {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Storage for latest data
-  let latestData = {
-    distance: 0,
-    waterDetected: false
-  };
+  // Initialize or retrieve existing latestData outside the handler function
+  let latestData = global.latestData || { distance: null, waterDetected: null }; // Default to null
 
   if (req.method === 'POST') {
     const { distance, waterDetected } = req.body;
@@ -20,17 +17,15 @@ const dataHandler = async (req, res) => {
 
     console.log(`Received data: distance=${distance}cm, waterDetected=${waterDetected}`);
 
-    // Update the existing latestData object (not create a new one)
-    latestData.distance = distance; 
-    latestData.waterDetected = waterDetected;
+    // Update global latestData
+    global.latestData = { distance, waterDetected };
 
     return res.status(200).json({ message: 'Datos recibidos correctamente' });
   } else if (req.method === 'GET') {
-    // Return the latest data if available
     if (latestData.distance !== null && latestData.waterDetected !== null) {
-      return res.status(200).json(latestData); // Return the whole latestData object
+      return res.status(200).json(latestData); 
     } else {
-      return res.status(204).json({ message: 'No data available yet' }); // 204 No Content
+      return res.status(204).json({ message: 'No data available yet' }); 
     }
   }
 };
