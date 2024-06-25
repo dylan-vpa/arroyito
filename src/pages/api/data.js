@@ -7,8 +7,8 @@ const dataHandler = async (req, res) => {
 
   // Storage for latest data
   let latestData = {
-    distance: null,
-    waterDetected: null
+    distance: 0,
+    waterDetected: false
   };
 
   if (req.method === 'POST') {
@@ -27,7 +27,7 @@ const dataHandler = async (req, res) => {
   } else if (req.method === 'GET') {
     // Return the latest data if available
     if (latestData.distance !== null && latestData.waterDetected !== null) {
-      return res.status(200).json({distance: latestData.distance, waterDetected: latestData.waterDetected});
+      return res.status(200).json({latestData});
     } else {
       return res.status(204).json({ message: 'No data available yet' }); // 204 No Content
     }
