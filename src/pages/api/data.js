@@ -21,16 +21,13 @@ const dataHandler = async (req, res) => {
     console.log(`Received data: distance=${distance}cm, waterDetected=${waterDetected}`);
 
     // Update the latest data
-    latestData = {
-      distance: distance.number(),
-      waterDetected: waterDetected.boolean()
-    };
+    latestData = { distance, waterDetected };
 
     return res.status(200).json({ message: 'Datos recibidos correctamente' });
   } else if (req.method === 'GET') {
     // Return the latest data if available
     if (latestData.distance !== null && latestData.waterDetected !== null) {
-      return res.status(200).json(latestData);
+      return res.status(200).json({latestData});
     } else {
       return res.status(204).json({ message: 'No data available yet' }); // 204 No Content
     }
