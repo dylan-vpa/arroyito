@@ -1,3 +1,5 @@
+import { useState } from 'react'; // Import useState
+
 const dataHandler = async (req, res) => {
   const allowedMethods = ['POST', 'GET'];
 
@@ -5,11 +7,11 @@ const dataHandler = async (req, res) => {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Storage for latest data
-  let latestData = {
+  // Storage for latest data using useState
+  const [latestData, setLatestData] = useState({
     distance: 0,
     waterDetected: false
-  };
+  });
 
   if (req.method === 'POST') {
     const { distance, waterDetected } = req.body;
@@ -20,8 +22,8 @@ const dataHandler = async (req, res) => {
 
     console.log(`Received data: distance=${distance}cm, waterDetected=${waterDetected}`);
 
-    // Update the latest data
-    latestData = { distance, waterDetected };
+    // Update the latest data using setLatestData
+    setLatestData({ distance, waterDetected });
 
     return res.status(200).json({ message: 'Datos recibidos correctamente' });
   } else if (req.method === 'GET') {
