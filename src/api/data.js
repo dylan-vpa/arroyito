@@ -1,11 +1,6 @@
 const dataHandler = async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*"); // Permite solicitudes desde cualquier origen (ajusta según tus necesidades)
   res.setHeader("Access-Control-Allow-Methods", "GET, POST");
-  const allowedMethods = ["POST", "GET"];
-
-  if (!allowedMethods.includes(req.method)) {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
 
   // Initialize or retrieve existing latestData outside the handler function
   let latestData = global.latestData || { distance: null, waterDetected: null }; // Default to null
